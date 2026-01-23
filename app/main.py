@@ -1,7 +1,12 @@
 from fastapi import FastAPI
 from app.api.routes.health import router as health_router
 
-app = FastAPI(title='Travel Package Trust System ')
+from app.db.database import engine
+from app.db.base import Base
+from app.db.models import user
+
+app = FastAPI(title="Travel Package Trust System")
+
+Base.metadata.create_all(bind=engine)
 
 app.include_router(health_router)
-
