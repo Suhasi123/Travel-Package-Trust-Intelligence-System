@@ -30,10 +30,17 @@ def create_package(
     ).first()
 
     if not company:
-        raise HTTPException(400, "Company profile not created")
+        raise HTTPException(
+            status_code=400,
+            detail="Company profile not created"
+        )
 
     if not company.verified_status:
-        raise HTTPException(403, "Company not verified")
+        raise HTTPException(
+            status_code=403,
+            detail="Company must be verified before creating packages"
+        )
+
 
     new_pkg = Package(
         company_id = current_company_user["user_id"],
