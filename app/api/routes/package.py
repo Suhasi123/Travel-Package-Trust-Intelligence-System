@@ -1,6 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from app.core.rbac import require_role
 
+from app.core.roles import COMPANY
+from app.db.models.company import Company
 from app.db.database import SessionLocal
 from app.db.models.package import Package
 from app.schemas.package import PackageCreate
@@ -17,9 +20,23 @@ def get_db():
 
 
 @router.post("")
-def create_package(pkg: PackageCreate, db: Session = Depends(get_db)):
+def create_package(
+    pkg: PackageCreate,
+    db: Session = Depends(get_db),
+    current_company_user=Depends(require_role(COMPANY))
+):
+    company = db.query(Company).filter(
+        Company.user_id == current_company_user["user_id"]
+    ).first()
+
+    if not company:
+        raise HTTPException(400, "Company profile not created")
+
+    if not company.verified_status:
+        raise HTTPException(403, "Company not verified")
+
     new_pkg = Package(
-        company_id=pkg.company_id,
+        company_id = current_company_user["user_id"],
         destination=pkg.destination,
         price=pkg.price,
         duration=pkg.duration,

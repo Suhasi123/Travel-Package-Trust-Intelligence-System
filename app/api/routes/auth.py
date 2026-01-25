@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 
+from app.core.roles import COMPANY, USER
 from app.db.database import SessionLocal
 from app.db.models.user import User
 from app.schemas.user import UserCreate, UserLogin
@@ -49,3 +50,21 @@ def login(
     )
 
     return {"access_token": token, "token_type": "bearer"}
+
+@router.post("/register-company")
+def register_company(user: UserCreate, db: Session = Depends(get_db)):
+    existing = db.query(User).filter(User.email == user.email).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    new_company_user = User(
+        email=user.email,
+        password_hash=hash_password(user.password),
+        role="company"
+    )
+
+    db.add(new_company_user)
+    db.commit()
+    db.refresh(new_company_user)
+
+    return {"message": "Company account registered successfully"}
