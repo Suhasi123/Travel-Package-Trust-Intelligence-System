@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.db.database import SessionLocal
 from app.db.models.company import Company
+from app.db.models.company_document import CompanyDocument
 from app.db.models.audit_log import AuditLog
 from app.db.models.package import Package
 
@@ -19,6 +20,7 @@ def get_db():
     finally:
         db.close()
 
+REQUIRED_DOCS = ["GST_CERTIFICATE", "LICENSE", "PAN"]
 
 @router.patch("/verify-company/{company_id}")
 def verify_company(
@@ -30,6 +32,15 @@ def verify_company(
 
     if not company:
         raise HTTPException(status_code=404, detail="Company not found")
+    
+    approved_docs = db.query(CompanyDocument).filter(
+        CompanyDocument.company_id == company_id,
+        CompanyDocument.status == "approved"
+    ).count()
+
+    if approved_docs < len(REQUIRED_DOCS):
+        raise HTTPException(400, "Company cannot be verified without required docs")
+
 
     company.verified_status = True
 
@@ -65,3 +76,24 @@ def approve_package(
     db.commit()
 
     return {"message": "Package approved successfully"}
+
+@router.patch("/approve-document/{doc_id}")
+def approve_document(
+    doc_id: int,
+    db: Session = Depends(get_db),
+    admin_user=Depends(require_role(ADMIN))
+):
+    doc = db.query(CompanyDocument).filter(CompanyDocument.id == doc_id).first()
+
+    if not doc:
+        raise HTTPException(404, "Document not found")
+
+    doc.status = "approved"
+
+    db.add(AuditLog(
+        action=f"Approved document {doc_id}",
+        actor_id=admin_user["user_id"]
+    ))
+
+    db.commit()
+    return {"message": "Document approved"}
