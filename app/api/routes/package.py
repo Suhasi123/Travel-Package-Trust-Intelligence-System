@@ -43,7 +43,7 @@ def create_package(
 
 
     new_pkg = Package(
-        company_id = current_company_user["user_id"],
+        company_id = company.id,
         destination=pkg.destination,
         price=pkg.price,
         duration=pkg.duration,
