@@ -34,8 +34,13 @@ def generate_row():
         "trustworthy": trust
     }
 
-
-data = [generate_row() for _ in range(ROWS)]
+data = []
+while len(data) < 5000:
+    row = generate_row()
+    if row["trustworthy"] == 1 and len([r for r in data if r["trustworthy"] == 1]) < 2500:
+        data.append(row)
+    elif row["trustworthy"] == 0 and len([r for r in data if r["trustworthy"] == 0]) < 2500:
+        data.append(row)
 
 df = pd.DataFrame(data)
 df.to_csv("trust_dataset.csv", index=False)
