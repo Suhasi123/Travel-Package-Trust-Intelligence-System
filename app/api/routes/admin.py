@@ -6,7 +6,8 @@ from app.db.models.company import Company
 from app.db.models.company_document import CompanyDocument
 from app.db.models.audit_log import AuditLog
 from app.db.models.package import Package
-
+from app.services.trust_score import compute_trust_score
+from app.ml.model_loader import model
 from app.core.rbac import require_role
 from app.core.roles import ADMIN
 
@@ -96,4 +97,7 @@ def approve_document(
     ))
 
     db.commit()
+
+    compute_trust_score(CompanyDocument.company_id, db, model)
+
     return {"message": "Document approved"}

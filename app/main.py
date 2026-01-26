@@ -10,7 +10,7 @@ from app.api.routes.trust import router as trust_router
 
 from app.db.database import engine
 from app.db.base import Base
-from app.db.models import user, company, company_document, audit_log, package, booking, review
+from app.db.models import user, company, company_document, audit_log, package, booking, review, trust_score
 
 app = FastAPI(title="Travel Package Trust System")
 
