@@ -57,8 +57,19 @@ def create_package(
 
     return {"message": "Package created, pending approval", "package": new_pkg}
 
-
 @router.get("")
 def list_packages(db: Session = Depends(get_db)):
     packages = db.query(Package).filter(Package.status == "approved").all()
     return packages
+
+@router.get("/{package_id}")
+def get_package(package_id: int, db: Session = Depends(get_db)):
+    pkg = db.query(Package).filter(
+        Package.id == package_id,
+        Package.status == "approved"
+    ).first()
+
+    if not pkg:
+        raise HTTPException(status_code=404, detail="Package not found")
+
+    return pkg

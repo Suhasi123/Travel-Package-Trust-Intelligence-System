@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import client from "../api/client";
+import { useNavigate } from "react-router-dom";
 
 export default function Packages() {
   const [packages, setPackages] = useState([]);
   const [scores, setScores] = useState({});
+  const [selected, setSelected] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchPackages() {
@@ -26,9 +29,30 @@ export default function Packages() {
     fetchPackages();
   }, []);
 
+  function toggleSelect(id) {
+    setSelected((prev) =>
+      prev.includes(id)
+        ? prev.filter((x) => x !== id)
+        : [...prev, id]
+    );
+  }
+
+  function handleCompare() {
+    if (selected.length < 2) {
+      alert("Select at least 2 packages to compare.");
+      return;
+    }
+
+    navigate(`/compare?ids=${selected.join(",")}`);
+  }
+
   return (
     <div style={{ padding: 40 }}>
       <h2>Approved Packages</h2>
+
+      <button onClick={handleCompare}>
+        Compare Selected ({selected.length})
+      </button>
 
       {packages.map((p) => (
         <div
@@ -39,6 +63,11 @@ export default function Packages() {
             marginBottom: 10,
           }}
         >
+          <input
+            type="checkbox"
+            checked={selected.includes(p.id)}
+            onChange={() => toggleSelect(p.id)}
+          />
           <h3>{p.destination}</h3>
           <p>Price: ₹{p.price}</p>
           <p>Duration: {p.duration} days</p>
@@ -49,7 +78,7 @@ export default function Packages() {
               ? scores[p.company_id] + "%"
               : "Loading..."}
           </p>
-          
+
           <a href={`/companies/${p.company_id}`}>
             View Company Profile
           </a>
