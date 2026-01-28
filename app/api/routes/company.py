@@ -18,6 +18,21 @@ def get_db():
     finally:
         db.close()
 
+@router.get("/{company_id}")
+def get_company(company_id: int, db: Session = Depends(get_db)):
+    company = db.query(Company).filter(Company.id == company_id).first()
+
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+
+    return {
+        "id": company.id,
+        "name": company.name,
+        "description": company.description,
+        "verified_status": company.verified_status,
+        "created_at": company.created_at
+    }
+
 @router.post("")
 def create_company(
     company: CompanyCreate,
@@ -59,10 +74,3 @@ def upload_document(
     db.refresh(new_doc)
 
     return {"message": "Document uploaded", "document": new_doc}
-
-@router.get('/{company_id}/status')
-def verified_status(company_id: int, db: Session = Depends(get_db)):
-
-    company = db.query(Company).filter(Company.id == company_id).first()
-
-    return {'verified_status': company.verified_status}

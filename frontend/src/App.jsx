@@ -38,6 +38,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Packages from "./pages/Packages";
+import Company from "./pages/Company";
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/packages" element={<Packages />} />
+        <Route path="/companies/:id" element={<Company />} />
       </Routes>
     </BrowserRouter>
   );
