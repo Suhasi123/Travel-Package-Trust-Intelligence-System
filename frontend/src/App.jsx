@@ -40,6 +40,7 @@ import Login from "./pages/Login";
 import Packages from "./pages/Packages";
 import Company from "./pages/Company";
 import Compare from "./pages/Compare";
+import Admin from "./pages/Admin";
 
 export default function App() {
   return (
@@ -49,6 +50,7 @@ export default function App() {
         <Route path="/packages" element={<Packages />} />
         <Route path="/companies/:id" element={<Company />} />
         <Route path="/compare" element={<Compare />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );

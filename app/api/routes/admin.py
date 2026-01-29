@@ -98,6 +98,44 @@ def approve_document(
 
     db.commit()
 
-    compute_trust_score(CompanyDocument.company_id, db, model)
+    compute_trust_score(doc.company_id, db, model)
 
     return {"message": "Document approved"}
+
+@router.get("/companies")
+def list_companies(db: Session = Depends(get_db),
+                   admin=Depends(require_role(ADMIN))):
+    return db.query(Company).all()
+
+
+@router.get("/pending-packages")
+def pending_packages(db: Session = Depends(get_db),
+                     admin=Depends(require_role(ADMIN))):
+    return db.query(Package).filter(Package.status == "pending").all()
+
+@router.get("/dashboard")
+def admin_dashboard(
+    db: Session = Depends(get_db),
+    admin=Depends(require_role(ADMIN))
+):
+    companies = db.query(Company).all()
+
+    result = []
+
+    for c in companies:
+        docs = db.query(CompanyDocument).filter(
+            CompanyDocument.company_id == c.id
+        ).all()
+
+        pending_pkgs = db.query(Package).filter(
+            Package.company_id == c.id,
+            Package.status == "pending"
+        ).all()
+
+        result.append({
+            "company": c,
+            "documents": docs,
+            "pending_packages": pending_pkgs
+        })
+
+    return result
