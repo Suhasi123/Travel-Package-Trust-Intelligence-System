@@ -41,6 +41,8 @@ import Packages from "./pages/Packages";
 import Company from "./pages/Company";
 import Compare from "./pages/Compare";
 import Admin from "./pages/Admin";
+import RegisterUser from "./pages/RegisterUser";
+import RegisterCompany from "./pages/RegisterCompany";
 
 export default function App() {
   return (
@@ -51,6 +53,8 @@ export default function App() {
         <Route path="/companies/:id" element={<Company />} />
         <Route path="/compare" element={<Compare />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/register-user" element={<RegisterUser />} />
+        <Route path="/register-company" element={<RegisterCompany />} />
       </Routes>
     </BrowserRouter>
   );

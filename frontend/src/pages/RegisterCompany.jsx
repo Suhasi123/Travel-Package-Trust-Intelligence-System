@@ -2,34 +2,34 @@ import { useState } from "react";
 import client from "../api/client";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function RegisterCompany() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  async function handleLogin(e) {
+  async function handleRegister(e) {
     e.preventDefault();
 
     try {
-      const res = await client.post("/auth/login", new URLSearchParams({
-        username: email,
-        password: password,
-      }));
+      await client.post("/auth/register-company", {
+        email,
+        password,
+      });
 
-      localStorage.setItem("token", res.data.access_token);
-      navigate("/packages");
+      alert("Company account created. Please login.");
+      navigate("/");
     } catch (err) {
-      alert("Login failed");
+      alert("Company registration failed");
     }
   }
 
   return (
     <div style={{ padding: 40 }}>
-      <h2>Login</h2>
+      <h2>Company Signup</h2>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         <input
-          placeholder="Email"
+          placeholder="Company Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -43,16 +43,8 @@ export default function Login() {
         />
         <br /><br />
 
-        <button type="submit">Login</button>
+        <button type="submit">Register Company</button>
       </form>
-      <p>
-        New user? <a href="/register-user">Signup here</a>
-      </p>
-
-      <p>
-        Travel company? <a href="/register-company">Register company account</a>
-      </p>
-
     </div>
   );
 }
