@@ -6,15 +6,36 @@ export default function Packages() {
   const [packages, setPackages] = useState([]);
   const [scores, setScores] = useState({});
   const [selected, setSelected] = useState([]);
+  const [search, setSearch] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [minDuration, setMinDuration] = useState("");
+  const [maxDuration, setMaxDuration] = useState("");
+  const [sort, setSort] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchPackages() {
-      const res = await client.get("/packages");
-      setPackages(res.data);
+    fetchPackages();
+  }, []);
 
-      // Fetch trust scores for each package company
-      res.data.forEach(async (pkg) => {
+  async function fetchPackages() {
+    const res = await client.get("/packages/with-trust", {
+      params: {
+        destination: search || undefined,
+        min_price: minPrice || undefined,
+        max_price: maxPrice || undefined,
+        min_duration: minDuration || undefined,
+        max_duration: maxDuration || undefined,
+        sort: sort || undefined,
+      },
+    });
+
+    setPackages(res.data);
+    setScores({});
+
+    for (let pkg of res.data) {
+      try {
         const scoreRes = await client.get(
           `/trust/companies/${pkg.company_id}/trust-score`
         );
@@ -23,11 +44,14 @@ export default function Packages() {
           ...prev,
           [pkg.company_id]: scoreRes.data.trust_score,
         }));
-      });
+      } catch {
+        setScores((prev) => ({
+          ...prev,
+          [pkg.company_id]: "N/A",
+        }));
+      }
     }
-
-    fetchPackages();
-  }, []);
+  }
 
   function toggleSelect(id) {
     setSelected((prev) =>
@@ -49,6 +73,49 @@ export default function Packages() {
   return (
     <div style={{ padding: 40 }}>
       <a href="/my-bookings">My Bookings</a>
+      <h3>Search Packages</h3>
+
+        <input
+          placeholder="Destination"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <input
+          placeholder="Min Price"
+          value={minPrice}
+          onChange={(e) => setMinPrice(e.target.value)}
+        />
+
+        <input
+          placeholder="Max Price"
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(e.target.value)}
+        />
+
+        <input
+          placeholder="Min Duration"
+          value={minDuration}
+          onChange={(e) => setMinDuration(e.target.value)}
+        />
+
+        <input
+          placeholder="Max Duration"
+          value={maxDuration}
+          onChange={(e) => setMaxDuration(e.target.value)}
+        />
+
+        <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <option value="">No Sort</option>
+          <option value="price_low">Price Low → High</option>
+          <option value="price_high">Price High → Low</option>
+          <option value="trust_high">Trust Score High → Low</option>
+        </select>
+        <br></br>
+        <br></br>
+        <button onClick={fetchPackages}>Apply Filters</button>
+
+        <hr />
 
       <h2>Approved Packages</h2>
 
@@ -76,9 +143,7 @@ export default function Packages() {
 
           <p>
             Trust Score:{" "}
-            {scores[p.company_id] !== undefined
-              ? scores[p.company_id] + "%"
-              : "Loading..."}
+            {p.trust_score !== null ? p.trust_score + "%" : "Not Available"}
           </p>
 
           <a href={`/companies/${p.company_id}`}>
