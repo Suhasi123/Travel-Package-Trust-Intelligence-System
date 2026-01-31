@@ -8,4 +8,4 @@ class Booking(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     package_id = Column(Integer, ForeignKey("packages.id"))
 
-    status = Column(String, default="completed")  
+    status = Column(String, default="pending")  

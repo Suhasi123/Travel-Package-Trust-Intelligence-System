@@ -7,6 +7,7 @@ from app.db.database import SessionLocal
 from app.db.models.user import User
 from app.schemas.user import UserCreate, UserLogin
 from app.core.security import hash_password, verify_password, create_access_token
+from app.core.deps import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -68,3 +69,15 @@ def register_company(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_company_user)
 
     return {"message": "Company account registered successfully"}
+
+
+@router.get('/me')
+def my_details(db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+    existing = db.query(User).filter(User.id == current_user["user_id"]).first()
+    if not existing:
+        raise HTTPException(status_code=400, detail="User not registered")
+    return {
+        "id": existing.id,
+        "email": existing.email,
+        "role": existing.role
+    }

@@ -66,3 +66,34 @@ def create_review(
     compute_trust_score(company_id, db, model)
 
     return {"message": "Review submitted successfully", "review": new_review}
+
+@router.get("/booking/{booking_id}")
+def get_review_for_booking(
+    booking_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    review = db.query(Review).filter(
+        Review.booking_id == booking_id
+    ).first()
+
+    if not review:
+        return {"exists": False}
+
+    return {"exists": True, "review": review}
+
+
+@router.get("/booking/{booking_id}")
+def review_exists(
+    booking_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    review = db.query(Review).filter(
+        Review.booking_id == booking_id
+    ).first()
+
+    if not review:
+        return {"exists": False}
+
+    return {"exists": True}

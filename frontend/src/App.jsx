@@ -43,6 +43,8 @@ import Compare from "./pages/Compare";
 import Admin from "./pages/Admin";
 import RegisterUser from "./pages/RegisterUser";
 import RegisterCompany from "./pages/RegisterCompany";
+import CompanyDashboard from "./pages/CompanyDashboard";
+import MyBookings from "./pages/MyBookings";
 
 export default function App() {
   return (
@@ -55,6 +57,8 @@ export default function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/register-user" element={<RegisterUser />} />
         <Route path="/register-company" element={<RegisterCompany />} />
+        <Route path="/company-dashboard" element={<CompanyDashboard />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
       </Routes>
     </BrowserRouter>
   );

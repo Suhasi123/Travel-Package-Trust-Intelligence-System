@@ -8,6 +8,7 @@ from app.api.routes.admin import router as admin_router
 from app.api.routes.package import router as package_router
 from app.api.routes.review import router as review_router
 from app.api.routes.trust import router as trust_router
+from app.api.routes.booking import router as booking_router
 
 from app.db.database import engine
 from app.db.base import Base
@@ -25,6 +26,7 @@ app.include_router(admin_router)
 app.include_router(package_router)
 app.include_router(review_router)
 app.include_router(trust_router)
+app.include_router(booking_router)
 
 app.add_middleware(
     CORSMiddleware,

@@ -17,8 +17,23 @@ export default function Login() {
       }));
 
       localStorage.setItem("token", res.data.access_token);
-      navigate("/packages");
+
+      const me = await client.get("/auth/me");
+      console.log("ME:", me.data);
+      console.log("ROLE:", me.data.role);
+
+      const role = me.data.role;
+
+      if (role === "admin") {
+        navigate("/admin");
+      } else if (role === "company") {
+        navigate("/company-dashboard");
+      } else {
+        navigate("/packages");
+      }
+
     } catch (err) {
+      console.log(err.response?.data);
       alert("Login failed");
     }
   }

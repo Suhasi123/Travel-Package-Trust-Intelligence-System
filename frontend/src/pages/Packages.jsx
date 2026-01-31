@@ -48,6 +48,8 @@ export default function Packages() {
 
   return (
     <div style={{ padding: 40 }}>
+      <a href="/my-bookings">My Bookings</a>
+
       <h2>Approved Packages</h2>
 
       <button onClick={handleCompare}>
@@ -82,6 +84,17 @@ export default function Packages() {
           <a href={`/companies/${p.company_id}`}>
             View Company Profile
           </a>
+          <br></br>
+          <button
+            onClick={async () => {
+              await client.post("/bookings", {
+                package_id: p.id,
+              });
+              alert("Booking created (pending)");
+            }}
+          >
+            Book Package
+          </button>
         </div>
       ))}
     </div>
