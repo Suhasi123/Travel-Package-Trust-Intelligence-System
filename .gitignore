@@ -10,7 +10,3 @@ frontend/node_modules/
 
 # Env
 .env
-
-# ML artifacts (optional)
-*.pkl
-*.csv

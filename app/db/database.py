@@ -14,7 +14,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./local.db")
 
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set")
