@@ -14,6 +14,9 @@ from app.db.database import engine
 from app.db.base import Base
 from app.db.models import user, company, company_document, audit_log, package, booking, review, trust_score
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = FastAPI(title="Travel Package Trust System")
 
 Base.metadata.create_all(bind=engine)

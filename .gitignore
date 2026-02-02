@@ -1,10 +1,16 @@
-# Virtual environments
+# Python
 myenv/
-
-
-# Python cache
 __pycache__/
-*.pyc
 
-# Environment variables
+# Database
+*.db
+
+# Node
+frontend/node_modules/
+
+# Env
 .env
+
+# ML artifacts (optional)
+*.pkl
+*.csv
