@@ -451,7 +451,7 @@ export default function MyBookings() {
             onMouseOut={(e) => {
               e.currentTarget.style.backgroundColor = "transparent";
             }}
-          >
+          > 
             ← Back
           </a>
           <div>

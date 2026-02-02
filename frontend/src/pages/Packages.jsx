@@ -165,7 +165,6 @@
 //     </div>
 //   );
 // }
-
 import { useEffect, useState } from "react";
 import client from "../api/client";
 import { useNavigate } from "react-router-dom";
@@ -273,6 +272,25 @@ export default function Packages() {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
+    },
+    headerLeft: {
+      display: "flex",
+      alignItems: "center",
+      gap: "16px",
+    },
+    backBtn: {
+      padding: "8px",
+      backgroundColor: "transparent",
+      border: "none",
+      cursor: "pointer",
+      borderRadius: "8px",
+      transition: "all 0.3s",
+      color: "#64748b",
+      textDecoration: "none",
+      display: "flex",
+      alignItems: "center",
+      fontSize: "14px",
+      fontWeight: "500",
     },
     headerTitle: {
       fontSize: "24px",
@@ -537,9 +555,23 @@ export default function Packages() {
       {/* Header */}
       <header style={styles.header}>
         <div style={styles.headerInner}>
-          <div>
-            <h1 style={styles.headerTitle}>Travel Packages</h1>
-            <p style={styles.headerSubtitle}>Discover verified travel experiences</p>
+          <div style={styles.headerLeft}>
+            <a
+              href="/"
+              style={styles.backBtn}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = "#f1f5f9";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
+            >
+              ← Back
+            </a>
+            <div>
+              <h1 style={styles.headerTitle}>Travel Packages</h1>
+              <p style={styles.headerSubtitle}>Discover verified travel experiences</p>
+            </div>
           </div>
           <div style={styles.headerActions}>
             {selected.length > 0 && (
