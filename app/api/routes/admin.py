@@ -139,3 +139,14 @@ def admin_dashboard(
         })
 
     return result
+
+@router.get("/audit-logs")
+def get_audit_logs(
+    db: Session = Depends(get_db),
+    admin=Depends(require_role(ADMIN))
+):
+    logs = db.query(AuditLog).order_by(
+        AuditLog.timestamp.desc()
+    ).limit(50).all()
+
+    return logs
