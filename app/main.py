@@ -31,10 +31,21 @@ app.include_router(review_router)
 app.include_router(trust_router)
 app.include_router(booking_router)
 
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["http://localhost:5173"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
