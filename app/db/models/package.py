@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey
+from datetime import datetime
 from app.db.base import Base
 
 class Package(Base):
@@ -13,4 +14,6 @@ class Package(Base):
 
     inclusions = Column(String)
 
-    status = Column(String, default="pending") 
+    status = Column(String, default="pending")
+    is_active = Column(Boolean, default=True)
+    deleted_at = Column(DateTime, nullable=True) 

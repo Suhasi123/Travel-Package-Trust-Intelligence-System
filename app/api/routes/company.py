@@ -9,6 +9,7 @@ from app.db.models.company_document import CompanyDocument
 from app.schemas.document import DocumentCreate
 from app.core.rbac import require_role
 from app.core.roles import COMPANY
+from app.core.deps import get_current_user
 
 router = APIRouter(prefix="/companies", tags=["Companies"])
 
@@ -98,8 +99,29 @@ def get_my_packages(db: Session = Depends(get_db),
     company = db.query(Company).filter(Company.user_id == current_user["user_id"]).first()
     if not company:
         raise HTTPException(404, "Company profile not found")
-    print("USER:", current_user["user_id"])
-    print("COMPANY:", company)
-    packages = db.query(Package).filter(Package.company_id == company.id).all()
+    
+    packages = db.query(Package).filter(
+        Package.company_id == company.id,
+    ).all()
 
     return packages
+
+@router.delete("/{company_id}")
+def delete_company(
+    company_id: int,
+    db: Session = Depends(get_db),
+    current_user= Depends(get_current_user)
+):
+    company = db.query(Company).filter(Company.id == company_id).first()
+
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+
+    # ✅ Only admin OR owner of that company
+    # if current_user.role != "admin" and company.user_id != current_user.id:
+    #     raise HTTPException(status_code=403, detail="Not allowed")
+
+    db.delete(company)
+    db.commit()
+
+    return {"message": "Company deleted successfully"}

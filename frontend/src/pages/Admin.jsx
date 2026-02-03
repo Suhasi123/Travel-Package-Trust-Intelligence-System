@@ -153,6 +153,25 @@ export default function Admin() {
       alignItems: "center",
       justifyContent: "space-between",
     },
+    headerLeft: {
+      display: "flex",
+      alignItems: "center",
+      gap: "16px",
+    },
+    backBtn: {
+      padding: "8px",
+      backgroundColor: "transparent",
+      border: "none",
+      cursor: "pointer",
+      borderRadius: "8px",
+      transition: "all 0.3s",
+      color: "#64748b",
+      textDecoration: "none",
+      display: "flex",
+      alignItems: "center",
+      fontSize: "14px",
+      fontWeight: "500",
+    },
     headerTitle: {
       fontSize: "24px",
       fontWeight: "700",
@@ -366,9 +385,23 @@ export default function Admin() {
       {/* Header */}
       <header style={styles.header}>
         <div style={styles.headerInner}>
-          <div>
-            <h1 style={styles.headerTitle}>Admin Dashboard</h1>
-            <p style={styles.headerSubtitle}>Manage companies, documents, and packages</p>
+          <div style={styles.headerLeft}>
+            <a
+              href="/"
+              style={styles.backBtn}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = "#f1f5f9";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
+            >
+              ← Back
+            </a>
+            <div>
+              <h1 style={styles.headerTitle}>Admin Dashboard</h1>
+              <p style={styles.headerSubtitle}>Manage companies, documents, and packages</p>
+            </div>
           </div>
           <a
             href="/audit-logs"

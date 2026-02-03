@@ -147,23 +147,67 @@ export default function CompanyPackages(){
     }, []);
 
     async function createPackage() {
+      // ✅ Frontend validation
+      if (!destination.trim()) {
+        alert("Destination is required");
+        return;
+      }
+
+      if (!price || Number(price) <= 0) {
+        alert("Price must be greater than 0");
+        return;
+      }
+
+      if (!duration || Number(duration) <= 0) {
+        alert("Duration must be at least 1 day");
+        return;
+      }
+
+      if (!inclusions.trim()) {
+        alert("Inclusions cannot be empty");
+        return;
+      }
+
+      try {
+        await client.post("/packages", {
+          destination: destination.trim(),
+          price: Number(price),
+          duration: Number(duration),
+          inclusions: inclusions.trim(),
+        });
+
+        alert("Package created (pending admin approval)");
+
+        // reset
+        setDestination("");
+        setPrice("");
+        setDuration("");
+        setInclusions("");
+
+        await loadCompany();
+      } catch (err) {
+        console.log(err.response?.data);
+        alert("Package creation failed");
+      }
+    }
+
+  async function removePackage(packageId) {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to remove this package? It will no longer be visible to users."
+    );
+
+    if (!confirmDelete) return;
+
     try {
-      await client.post("/packages", {
-        destination,
-        price: Number(price),
-        duration: Number(duration),
-        inclusions,
-      });
+      await client.delete(`/packages/${packageId}`);
 
-      alert("Package created (pending admin approval)");
+      alert("Package removed successfully");
 
-      setDestination("");
-      setPrice("");
-      setDuration("");
-      setInclusions("");
-      await loadCompany(); 
+      // Refresh list
+      loadCompany();
     } catch (err) {
-      alert("Package creation failed (company not verified?)");
+      console.log(err.response?.data);
+      alert("Failed to remove package");
     }
   }
 
@@ -372,6 +416,18 @@ export default function CompanyPackages(){
       flexDirection: "column",
       gap: "12px",
     },
+    removeBtn: {
+      marginTop: "14px",
+      width: "100%",
+      padding: "10px 16px",
+      backgroundColor: "#dc2626",
+      color: "white",
+      border: "none",
+      borderRadius: "12px",
+      fontWeight: "600",
+      cursor: "pointer",
+      transition: "all 0.3s",
+    },
     detailRow: {
       display: "flex",
       alignItems: "center",
@@ -409,6 +465,12 @@ export default function CompanyPackages(){
       </div>
     );
   }
+
+  const isFormValid =
+    destination.trim() &&
+    price > 0 &&
+    duration > 0 &&
+    inclusions.trim();
 
   return (
     <div>
@@ -506,7 +568,11 @@ export default function CompanyPackages(){
 
           <button
             onClick={createPackage}
-            style={styles.primaryBtn}
+            style={{
+              ...styles.primaryBtn,
+              opacity: !isFormValid ? 0.5 : 1,
+              cursor: !isFormValid ? "not-allowed" : "pointer",
+            }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = "scale(1.05)";
               e.currentTarget.style.boxShadow = "0 8px 12px rgba(79, 70, 229, 0.3)";
@@ -519,6 +585,7 @@ export default function CompanyPackages(){
             <span>✓</span>
             <span>Create Package</span>
           </button>
+
         </div>
       ) : (
         <div style={styles.warningBox}>
@@ -601,6 +668,19 @@ export default function CompanyPackages(){
                       </div>
                     </div>
                   </div>
+                  {/* Remove Button */}
+                  <button
+                    style={styles.removeBtn}
+                    onClick={() => removePackage(p.id)}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "#b91c1c";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "#dc2626";
+                    }}
+                  >
+                    🗑 Remove Package
+                  </button>
                 </div>
               );
             })}
