@@ -21,7 +21,7 @@ def compute_trust_score(company_id, db, model):
     ]])
 
     prob = model.predict_proba(X)[0][1]  # trust probability
-    score = round(prob * 100, 2)
+    score = float(round(prob * 100, 2))
 
     existing = db.query(TrustScore).filter(
         TrustScore.company_id == company_id
