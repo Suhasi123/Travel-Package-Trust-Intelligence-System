@@ -31,18 +31,18 @@ app.include_router(review_router)
 app.include_router(trust_router)
 app.include_router(booking_router)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # app.add_middleware(
 #     CORSMiddleware,
-#     allow_origins=["https://travel-package-trust-intelligence-s.vercel.app"],
+#     allow_origins=["http://localhost:5173"],
 #     allow_credentials=True,
 #     allow_methods=["*"],
 #     allow_headers=["*"],
 # )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://travel-package-trust-intelligence-s.vercel.app"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
