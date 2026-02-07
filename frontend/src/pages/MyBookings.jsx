@@ -211,6 +211,8 @@ export default function MyBookings() {
         return { bg: "#fef3c7", text: "#b45309", border: "#fde68a" };
       case "pending":
         return { bg: "#dbeafe", text: "#1d4ed8", border: "#bfdbfe" };
+      case "cancelled":
+        return { bg: "#ffc4b2", text: "#fa3131", border: "#febfbf" };
       default:
         return { bg: "#f1f5f9", text: "#64748b", border: "#e2e8f0" };
     }
@@ -228,6 +230,12 @@ export default function MyBookings() {
         return status;
     }
   };
+
+  async function cancelBooking(id) {
+    await client.post(`/bookings/${id}/cancel`);
+    alert("Cancelled");
+    loadBookings();
+  }
 
   const styles = {
     container: {
@@ -546,6 +554,7 @@ export default function MyBookings() {
                       {b.status === "completed" && <CheckCircle size={18}/>}
                       {b.status === "awaiting_user_confirmation" && <Hourglass size={18}/>}
                       {b.status === "pending" && <Clock size={18}/>}
+                      {b.status === "cancelled" && <CircleX size={18}/>}
                       {getStatusLabel(b.status)}
                     </span>
                   </div>
@@ -571,6 +580,12 @@ export default function MyBookings() {
                           }}
                         >
                           <CheckCircle size={16}/> Confirm Trip Completed
+                        </button>
+                      )}
+                      {b.status !== "cancelled" && b.status !== "completed" && (
+                        <button onClick={() => cancelBooking(b.id)}
+                                style={styles.primaryBtn}>
+                          Cancel Booking
                         </button>
                       )}
 

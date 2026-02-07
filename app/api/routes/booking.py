@@ -124,3 +124,25 @@ def user_confirm_booking(
     db.commit()
 
     return {"message": "Booking confirmed completed"}
+
+@router.post("/{booking_id}/cancel")
+def cancel_booking(
+    booking_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    booking = db.query(Booking).filter(
+        Booking.id == booking_id,
+        Booking.user_id == current_user["user_id"]
+    ).first()
+
+    if not booking:
+        raise HTTPException(404, "Booking not found")
+
+    if booking.status in ["completed", "cancelled"]:
+        raise HTTPException(400, "Cannot cancel this booking")
+
+    booking.status = "cancelled"
+    db.commit()
+
+    return {"message": "Booking cancelled"}

@@ -615,7 +615,11 @@ export default function CompanyPackages(){
         </div>
       ) : (
         <div style={styles.warningBox}>
-          <span style={styles.warningIcon}><AlertTriangle size={18}/></span>
+          <span style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        ...styles.warningIcon}}><AlertTriangle size={18}/></span>
           <div style={styles.warningContent}>
             <h3 style={styles.warningTitle}>Verification Required</h3>
             <p style={styles.warningText}>
@@ -628,7 +632,7 @@ export default function CompanyPackages(){
       {/* My Packages List */}
       <div>
         <h2 style={styles.sectionTitle}>
-          <Package size={24}/>
+          <Package size={30}/>
           <span>My Packages</span>
         </h2>
 
