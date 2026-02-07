@@ -129,6 +129,32 @@
 
 import { useEffect, useState } from "react";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react";  
 
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -464,7 +490,7 @@ export default function MyBookings() {
       <div style={styles.main}>
         {bookings.length === 0 ? (
           <div style={styles.emptyState}>
-            <div style={styles.emptyIcon}>📋</div>
+            <div style={styles.emptyIcon}><ClipboardList size={22}/></div>
             <h3 style={styles.emptyTitle}>No bookings yet</h3>
             <p style={styles.emptyText}>Start exploring packages to make your first booking</p>
             <a
@@ -502,8 +528,12 @@ export default function MyBookings() {
                   }}
                 >
                   <div style={styles.bookingHeader}>
-                    <span style={styles.bookingId}>
-                      📋 Booking ID: <strong>#{b.id}</strong>
+                    <span style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        ...styles.bookingId}}>
+                      <ClipboardList size={18}/> Booking ID: <strong>#{b.id}</strong>
                     </span>
                     <span
                       style={{
@@ -513,9 +543,9 @@ export default function MyBookings() {
                         borderColor: statusColor.border,
                       }}
                     >
-                      {b.status === "completed" && "✓"}
-                      {b.status === "awaiting_user_confirmation" && "⏳"}
-                      {b.status === "pending" && "⏱️"}
+                      {b.status === "completed" && <CheckCircle size={18}/>}
+                      {b.status === "awaiting_user_confirmation" && <Hourglass size={18}/>}
+                      {b.status === "pending" && <Clock size={18}/>}
                       {getStatusLabel(b.status)}
                     </span>
                   </div>
@@ -526,7 +556,11 @@ export default function MyBookings() {
                       {b.status === "awaiting_user_confirmation" && (
                         <button
                           onClick={() => confirmBooking(b.id)}
-                          style={styles.primaryBtn}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            ...styles.primaryBtn}}
                           onMouseOver={(e) => {
                             e.currentTarget.style.transform = "scale(1.05)";
                             e.currentTarget.style.boxShadow = "0 8px 12px rgba(79, 70, 229, 0.3)";
@@ -536,7 +570,7 @@ export default function MyBookings() {
                             e.currentTarget.style.boxShadow = "none";
                           }}
                         >
-                          ✓ Confirm Trip Completed
+                          <CheckCircle size={16}/> Confirm Trip Completed
                         </button>
                       )}
 
@@ -549,7 +583,11 @@ export default function MyBookings() {
                           ) : (
                             <button
                               onClick={() => setReviewingId(b.id)}
-                              style={styles.secondaryBtn}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "6px",
+                                ...styles.secondaryBtn}}
                               onMouseOver={(e) => {
                                 e.currentTarget.style.backgroundColor = "#e2e8f0";
                               }}
@@ -557,7 +595,7 @@ export default function MyBookings() {
                                 e.currentTarget.style.backgroundColor = "#f1f5f9";
                               }}
                             >
-                              ⭐ Leave Review
+                              <Star size={18}/> Leave Review
                             </button>
                           )}
                         </>
@@ -569,7 +607,7 @@ export default function MyBookings() {
                   {reviewingId === b.id && (
                     <div style={styles.reviewForm}>
                       <h4 style={styles.reviewFormTitle}>
-                        <span>⭐</span>
+                        <Star size={20}/>
                         <span>Submit Your Review</span>
                       </h4>
 

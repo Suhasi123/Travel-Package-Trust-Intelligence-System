@@ -57,6 +57,32 @@
 
 import { useEffect, useState } from "react";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react";  
 
 export default function CompanyDocuments(){
     const [company, setCompany] = useState(null);
@@ -204,9 +230,9 @@ export default function CompanyDocuments(){
     };
 
     const docTypeOptions = [
-      { value: "PAN", label: "PAN Card", icon: "🆔", description: "Permanent Account Number" },
-      { value: "LICENSE", label: "Business License", icon: "📜", description: "Official business license" },
-      { value: "GST_CERTIFICATE", label: "GST Certificate", icon: "📋", description: "Goods and Services Tax registration" },
+      { value: "PAN", label: "PAN Card", description: "Permanent Account Number" },
+      { value: "LICENSE", label: "Business License", description: "Official business license" },
+      { value: "GST_CERTIFICATE", label: "GST Certificate", description: "Goods and Services Tax registration" },
     ];
 
     return (
@@ -216,7 +242,7 @@ export default function CompanyDocuments(){
 
         <div style={styles.card}>
           <h2 style={styles.cardTitle}>
-            <span>📄</span>
+            <FileText size={24}/>
             <span>Upload Document</span>
           </h2>
           <p style={styles.cardDescription}>
@@ -224,7 +250,7 @@ export default function CompanyDocuments(){
           </p>
 
           <div style={styles.infoBox}>
-            <span style={styles.infoIcon}>ℹ️</span>
+            <span style={styles.infoIcon}><Info size={18}/></span>
             <span style={styles.infoText}>
               Uploaded documents will be reviewed by our admin team. You'll be notified once verification is complete.
             </span>
@@ -247,7 +273,7 @@ export default function CompanyDocuments(){
             >
               {docTypeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {option.icon} {option.label}
+                   {option.label}
                 </option>
               ))}
             </select>
@@ -271,7 +297,7 @@ export default function CompanyDocuments(){
               }}
             />
             <p style={{ fontSize: "13px", color: "#64748b", marginTop: "8px" }}>
-              💡 For demo purposes, enter any URL format
+              <Lightbulb size={12}/> For demo purposes, enter any URL format
             </p>
           </div>
 
@@ -287,7 +313,7 @@ export default function CompanyDocuments(){
               e.currentTarget.style.boxShadow = "none";
             }}
           >
-            <span>⬆️</span>
+            <Upload size={18}/>
             <span>Upload Document</span>
           </button>
         </div>

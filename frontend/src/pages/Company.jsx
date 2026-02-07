@@ -87,6 +87,29 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+} from "lucide-react";
 
 export default function Company() {
   const { id } = useParams();
@@ -351,7 +374,7 @@ export default function Company() {
         </header>
         <div style={styles.main}>
           <div style={styles.loadingState}>
-            <div style={styles.loadingIcon}>🏢</div>
+            <div style={styles.loadingIcon}><Building2 size={24}/></div>
             <p style={styles.loadingText}>Loading...</p>
           </div>
         </div>
@@ -390,7 +413,14 @@ export default function Company() {
         <div style={{ ...styles.gridTwoCol, marginBottom: "24px" }}>
           {/* Company Information Card */}
           <div style={styles.card}>
-            <h2 style={styles.companyName}>🏢 {company.name}</h2>
+            <h2 style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  ...styles.companyName
+                }}>
+              <Building2 size={32}/> {company.name}
+            </h2>
             <p style={styles.description}>{company.description}</p>
             
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -404,7 +434,7 @@ export default function Company() {
                     : { ...styles.verifiedBadge, ...styles.verifiedNo }
                 }
               >
-                {company.verified_status ? "✓ Verified" : "✗ Not Verified"}
+                {company.verified_status ? <span><CheckCircle size={16}/> Verified</span> : <span><CircleX size={16}/> Not Verified</span>}
               </span>
             </div>
           </div>
@@ -434,7 +464,7 @@ export default function Company() {
         {explain && (
           <div style={styles.card}>
             <h3 style={styles.explainTitle}>
-              <span>💡</span>
+              <Lightbulb size={22}/>
               <span>Why this Trust Score?</span>
             </h3>
 
@@ -456,7 +486,14 @@ export default function Company() {
                     e.currentTarget.style.transform = "translateX(0)";
                   }}
                 >
-                  <span style={styles.signalIcon}>✓</span>
+                  <span style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        ...styles.signalIcon
+                      }}>
+                    <CheckCircle size={18}/>
+                  </span>
                   <span>{v}</span>
                 </li>
               ))}

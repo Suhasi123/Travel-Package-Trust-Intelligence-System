@@ -46,6 +46,30 @@
 
 import { useEffect, useState } from "react";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+} from "lucide-react"; 
 
 export default function CompanyBookings(){
     const [company, setCompany] = useState(null);
@@ -213,7 +237,7 @@ export default function CompanyBookings(){
 
             <div style={styles.sectionHeader}>
               <h2 style={styles.sectionTitle}>
-                <span>📋</span>
+                <ClipboardList size={24}/>
                 <span>Pending Bookings</span>
               </h2>
               {pendingBookings.length > 0 && (
@@ -225,7 +249,7 @@ export default function CompanyBookings(){
 
             {pendingBookings.length === 0 ? (
               <div style={styles.emptyState}>
-                <div style={styles.emptyIcon}>✅</div>
+                <div style={styles.emptyIcon}><CheckCircle size={32}/></div>
                 <h3 style={styles.emptyTitle}>All caught up!</h3>
                 <p style={styles.emptyText}>No pending bookings at the moment</p>
               </div>
@@ -248,10 +272,10 @@ export default function CompanyBookings(){
                   >
                     <div style={styles.bookingInfo}>
                       <div style={styles.bookingId}>
-                        <span>📋</span>
+                        <ClipboardList size={18}/>
                         <span>Booking #{b.id}</span>
                         <span style={styles.statusBadge}>
-                          ⏳ Pending
+                          <Hourglass size={18}/> Pending
                         </span>
                       </div>
                       <div style={styles.userId}>
@@ -278,7 +302,7 @@ export default function CompanyBookings(){
                         e.currentTarget.style.boxShadow = "none";
                       }}
                     >
-                      <span>✓</span>
+                      <CheckCircle size={18}/>
                       <span>Mark Trip Done</span>
                     </button>
                   </div>

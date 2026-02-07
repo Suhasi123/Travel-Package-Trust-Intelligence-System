@@ -30,6 +30,28 @@
 
 import { useEffect, useState } from "react";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+} from "lucide-react";
 
 export default function AdminLogs() {
   const [logs, setLogs] = useState([]);
@@ -296,7 +318,7 @@ export default function AdminLogs() {
       <div style={styles.main}>
         {/* Stats Bar */}
         <div style={styles.statsBar}>
-          <div style={styles.statsIcon}>📊</div>
+          <div style={styles.statsIcon}><BarChart3 size={24}/></div>
           <div style={styles.statsText}>
             <div style={styles.statsTitle}>Total Audit Logs</div>
             <div style={styles.statsValue}>{logs.length}</div>
@@ -306,7 +328,7 @@ export default function AdminLogs() {
         {/* Timeline */}
         {logs.length === 0 ? (
           <div style={styles.emptyState}>
-            <div style={styles.emptyIcon}>📋</div>
+            <div style={styles.emptyIcon}><ClipboardList size={20}/></div>
             <h3 style={styles.emptyTitle}>No audit logs yet</h3>
             <p style={styles.emptyText}>Activity logs will appear here as actions are performed</p>
           </div>
@@ -360,13 +382,18 @@ export default function AdminLogs() {
                       >
                         {actionStyle.icon} {l.action}
                       </span>
-                      <span style={styles.timestamp}>
-                        🕐 {formatTimestamp(l.timestamp)}
+                      <span style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        ...styles.timestamp
+                      }}> 
+                        <Clock size={18}/> {formatTimestamp(l.timestamp)}
                       </span>
                     </div>
 
                     <div style={styles.actorInfo}>
-                      <div style={styles.actorIcon}>👤</div>
+                      <div style={styles.actorIcon}><User size={18}/></div>
                       <span>
                         <strong>Actor ID:</strong> {l.actor_id}
                       </span>

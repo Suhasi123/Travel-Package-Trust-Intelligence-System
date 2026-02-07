@@ -75,6 +75,32 @@
 import { useState } from "react";
 import client from "../api/client";
 import { useNavigate } from "react-router-dom";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react";  
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -352,7 +378,10 @@ export default function Login() {
             }}
           >
             <div style={styles.signupInfo}>
-              <div style={styles.signupTitle}>✈️ Traveler Account</div>
+              <div style={{display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        ...styles.signupTitle}}><Plane size={18}/> Traveler Account</div>
               <div style={styles.signupText}>Book and explore packages</div>
             </div>
             <a
@@ -383,7 +412,10 @@ export default function Login() {
             }}
           >
             <div style={styles.signupInfo}>
-              <div style={styles.signupTitle}>🏢 Company Account</div>
+              <div style={{display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        ...styles.signupTitle}}><Building2 size={18}/> Company Account</div>
               <div style={styles.signupText}>List your travel packages</div>
             </div>
             <a

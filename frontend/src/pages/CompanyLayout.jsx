@@ -18,6 +18,32 @@
 // }
 
 import { Link, Outlet, useLocation } from "react-router-dom";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react"; 
 
 export default function CompanyLayout() {
   const location = useLocation();
@@ -158,11 +184,11 @@ export default function CompanyLayout() {
   };
 
   const navItems = [
-    { path: "profile", label: "Profile", icon: "👤" },
-    { path: "documents", label: "Documents", icon: "📄" },
-    { path: "packages", label: "Packages", icon: "📦" },
-    { path: "bookings", label: "Bookings", icon: "📋" },
-  ];
+  { path: "profile", label: "Profile", icon: User },
+  { path: "documents", label: "Documents", icon: FileText },
+  { path: "packages", label: "Packages", icon: Package },
+  { path: "bookings", label: "Bookings", icon: ClipboardList },
+];
 
   return (
     <div style={styles.container}>
@@ -212,6 +238,7 @@ export default function CompanyLayout() {
           <nav style={styles.nav}>
             {navItems.map((item) => {
               const active = isActive(item.path);
+              const Icon = item.icon;
               return (
                 <Link
                   key={item.path}
@@ -233,7 +260,10 @@ export default function CompanyLayout() {
                     }
                   }}
                 >
-                  <span style={styles.navIcon}>{item.icon}</span>
+                  
+                  <span style={styles.navIcon}>
+                    <Icon size={18} />
+                  </span>
                   <span>{item.label}</span>
                 </Link>
               );

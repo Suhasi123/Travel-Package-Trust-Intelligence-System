@@ -52,6 +52,33 @@
 import { useState } from "react";
 import client from "../api/client";
 import { useNavigate } from "react-router-dom";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+  Sparkles,
+} from "lucide-react"; 
 
 export default function RegisterUser() {
   const [email, setEmail] = useState("");
@@ -204,13 +231,13 @@ export default function RegisterUser() {
     <div style={styles.container}>
       <div style={styles.card}>
         <div style={styles.header}>
-          <div style={styles.logo}>✈️</div>
+          <div style={styles.logo}><Plane size={35}/></div>
           <h1 style={styles.title}>User Signup</h1>
           <p style={styles.subtitle}>Create your account to start booking travel packages</p>
         </div>
 
         <div style={styles.infoBox}>
-          <span style={styles.infoIcon}>✨</span>
+          <span style={styles.infoIcon}><Sparkles size={18}/></span>
           <span style={styles.infoText}>
             Join our platform to browse verified travel packages, compare options, and book your next adventure!
           </span>

@@ -82,6 +82,32 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react";  
 
 export default function Compare() {
   const [searchParams] = useSearchParams();
@@ -449,7 +475,7 @@ export default function Compare() {
       <div style={styles.main}>
         {packages.length === 0 ? (
           <div style={styles.emptyState}>
-            <div style={styles.emptyIcon}>📦</div>
+            <div style={styles.emptyIcon}><Package size={22}/></div>
             <h3 style={styles.emptyTitle}>No packages selected</h3>
             <p style={styles.emptyText}>Select packages from the listing page to compare</p>
             <a
@@ -499,7 +525,7 @@ export default function Compare() {
                     <td style={styles.td}>
                       <div style={styles.featureCell}>
                         <div style={{ ...styles.featureIcon, backgroundColor: "#eef2ff" }}>
-                          📍
+                          <MapPin size={18}/>
                         </div>
                         <span style={styles.featureLabel}>Destination</span>
                       </div>
@@ -524,7 +550,7 @@ export default function Compare() {
                     <td style={styles.td}>
                       <div style={styles.featureCell}>
                         <div style={{ ...styles.featureIcon, backgroundColor: "#ecfdf5" }}>
-                          💰
+                          <IndianRupee size={18}/>
                         </div>
                         <span style={styles.featureLabel}>Price</span>
                       </div>
@@ -561,7 +587,7 @@ export default function Compare() {
                     <td style={styles.td}>
                       <div style={styles.featureCell}>
                         <div style={{ ...styles.featureIcon, backgroundColor: "#dbeafe" }}>
-                          📅
+                          <Calendar size={18}/>
                         </div>
                         <span style={styles.featureLabel}>Duration</span>
                       </div>
@@ -598,7 +624,7 @@ export default function Compare() {
                     <td style={styles.td}>
                       <div style={styles.featureCell}>
                         <div style={{ ...styles.featureIcon, backgroundColor: "#f5f3ff" }}>
-                          🛡️
+                          <ShieldCheck size={18}/>
                         </div>
                         <span style={styles.featureLabel}>Trust Score</span>
                       </div>

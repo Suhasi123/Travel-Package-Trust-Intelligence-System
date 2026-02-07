@@ -52,6 +52,32 @@
 import { useState } from "react";
 import client from "../api/client";
 import { useNavigate } from "react-router-dom";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react"; 
 
 export default function RegisterCompany() {
   const [email, setEmail] = useState("");
@@ -204,13 +230,13 @@ export default function RegisterCompany() {
     <div style={styles.container}>
       <div style={styles.card}>
         <div style={styles.header}>
-          <div style={styles.logo}>🏢</div>
+          <div style={styles.logo}><Building2 size={35}/></div>
           <h1 style={styles.title}>Company Signup</h1>
           <p style={styles.subtitle}>Create your company account to start offering travel packages</p>
         </div>
 
         <div style={styles.infoBox}>
-          <span style={styles.infoIcon}>ℹ️</span>
+          <span style={styles.infoIcon}><Info size={18}/></span>
           <span style={styles.infoText}>
             After registration, you'll need to complete your company profile and submit documents for verification before creating packages.
           </span>

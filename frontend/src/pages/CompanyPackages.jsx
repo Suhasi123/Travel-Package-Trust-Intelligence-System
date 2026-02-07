@@ -121,7 +121,33 @@
 
 import { useEffect, useState } from "react";
 import client from "../api/client";
-
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+  Plus,
+} from "lucide-react";  
 
 export default function CompanyPackages(){
     const [company, setCompany] = useState(null);
@@ -460,7 +486,7 @@ export default function CompanyPackages(){
   if (!company) {
     return (
       <div style={styles.loadingContainer}>
-        <div style={styles.loadingIcon}>🏢</div>
+        <div style={styles.loadingIcon}><Building2 size={18}/></div>
         <p style={styles.loadingText}>Loading...</p>
       </div>
     );
@@ -481,7 +507,7 @@ export default function CompanyPackages(){
       {company.verified_status ? (
         <div style={styles.card}>
           <h2 style={styles.cardTitle}>
-            <span>➕</span>
+            <Plus size={24}/>
             <span>Create New Package</span>
           </h2>
           <p style={styles.cardDescription}>
@@ -582,14 +608,14 @@ export default function CompanyPackages(){
               e.currentTarget.style.boxShadow = "none";
             }}
           >
-            <span>✓</span>
+            <CheckCircle size={18}/>
             <span>Create Package</span>
           </button>
 
         </div>
       ) : (
         <div style={styles.warningBox}>
-          <span style={styles.warningIcon}>⚠️</span>
+          <span style={styles.warningIcon}><AlertTriangle size={18}/></span>
           <div style={styles.warningContent}>
             <h3 style={styles.warningTitle}>Verification Required</h3>
             <p style={styles.warningText}>
@@ -602,13 +628,13 @@ export default function CompanyPackages(){
       {/* My Packages List */}
       <div>
         <h2 style={styles.sectionTitle}>
-          <span>📦</span>
+          <Package size={24}/>
           <span>My Packages</span>
         </h2>
 
         {myPackages.length === 0 ? (
           <div style={styles.emptyState}>
-            <div style={styles.emptyIcon}>📦</div>
+            <div style={styles.emptyIcon}><Package size={18}/></div>
             <p style={styles.emptyText}>No packages created yet</p>
             <p style={styles.emptySubtext}>Create your first package to get started</p>
           </div>
@@ -633,7 +659,7 @@ export default function CompanyPackages(){
                 >
                   <div style={styles.packageHeader}>
                     <div>
-                      <h3 style={styles.packageDestination}>📍 {p.destination}</h3>
+                      <h3 style={styles.packageDestination}><MapPin size={22}/> {p.destination}</h3>
                     </div>
                     <span
                       style={{
@@ -650,7 +676,7 @@ export default function CompanyPackages(){
                   <div style={styles.packageDetails}>
                     <div style={styles.detailRow}>
                       <div style={{ ...styles.detailIcon, backgroundColor: "#eef2ff" }}>
-                        💰
+                        <IndianRupee size={18}/>
                       </div>
                       <div style={styles.detailText}>
                         <span style={styles.detailLabel}>Price</span>
@@ -660,7 +686,7 @@ export default function CompanyPackages(){
 
                     <div style={styles.detailRow}>
                       <div style={{ ...styles.detailIcon, backgroundColor: "#dbeafe" }}>
-                        📅
+                        <Calendar size={18}/>
                       </div>
                       <div style={styles.detailText}>
                         <span style={styles.detailLabel}>Duration</span>
@@ -670,7 +696,13 @@ export default function CompanyPackages(){
                   </div>
                   {/* Remove Button */}
                   <button
-                    style={styles.removeBtn}
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        justifyContent: "center",
+                        ...styles.removeBtn
+                      }}
                     onClick={() => removePackage(p.id)}
                     onMouseOver={(e) => {
                       e.currentTarget.style.backgroundColor = "#b91c1c";
@@ -679,11 +711,11 @@ export default function CompanyPackages(){
                       e.currentTarget.style.backgroundColor = "#dc2626";
                     }}
                   >
-                    🗑 Remove Package
+                    <Trash2 size={18}/> Remove Package
                   </button>
                 </div>
               );
-            })}
+            })} 
           </div>
         )}
       </div>

@@ -168,6 +168,32 @@
 import { useEffect, useState } from "react";
 import client from "../api/client";
 import { useNavigate } from "react-router-dom";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react";  
 
 export default function Packages() {
   const [packages, setPackages] = useState([]);
@@ -720,7 +746,7 @@ export default function Packages() {
           </div>
         ) : packages.length === 0 ? (
           <div style={styles.emptyState}>
-            <div style={styles.emptyIcon}>📦</div>
+            <div style={styles.emptyIcon}><Package size={22}/></div>
             <h3 style={{ fontSize: "20px", fontWeight: "600", color: "#0f172a", marginBottom: "8px" }}>
               No packages found
             </h3>
@@ -760,27 +786,30 @@ export default function Packages() {
                       <div
                         style={{
                           ...styles.trustBadge,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
                           backgroundColor: trustColor.bg,
                           color: trustColor.text,
                           borderColor: trustColor.border,
                         }}
                       >
-                        🛡️ {p.trust_score !== null ? `${p.trust_score}%` : "N/A"}
+                        <ShieldCheck size={18}/> {p.trust_score !== null ? `${p.trust_score}%` : "N/A"}
                       </div>
                     </div>
 
-                    <div style={styles.destination}>📍 {p.destination}</div>
+                    <div style={styles.destination}><MapPin size={18}/> {p.destination}</div>
 
                     <div style={styles.detailsGrid}>
                       <div style={styles.detailRow}>
-                        <div style={{ ...styles.detailIcon, backgroundColor: "#eef2ff" }}>💰</div>
+                        <div style={{ ...styles.detailIcon, backgroundColor: "#eef2ff" }}><IndianRupee size={18}/></div>
                         <div style={styles.detailText}>
                           <span style={styles.detailLabel}>Price</span>
                           <span style={styles.detailValue}>₹{p.price}</span>
                         </div>
                       </div>
                       <div style={styles.detailRow}>
-                        <div style={{ ...styles.detailIcon, backgroundColor: "#dbeafe" }}>📅</div>
+                        <div style={{ ...styles.detailIcon, backgroundColor: "#dbeafe" }}><Calendar size={18}/></div>
                         <div style={styles.detailText}>
                           <span style={styles.detailLabel}>Duration</span>
                           <span style={styles.detailValue}>{p.duration} days</span>
@@ -802,7 +831,11 @@ export default function Packages() {
                           await client.post("/bookings", { package_id: p.id });
                           alert("Booking created (pending)");
                         }}
-                        style={styles.bookBtn}
+                        style={{display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "6px", 
+                          ...styles.bookBtn}}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.05)";
                           e.currentTarget.style.boxShadow = "0 8px 12px rgba(79, 70, 229, 0.3)";
@@ -812,7 +845,7 @@ export default function Packages() {
                           e.currentTarget.style.boxShadow = "none";
                         }}
                       >
-                        ✓ Book Package
+                        <CheckCircle size={18}/> Book Package
                       </button>
                     </div>
                   </div>

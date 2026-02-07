@@ -94,6 +94,32 @@
 
 import { useEffect, useState } from "react";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+  CircleX,
+  Hourglass,
+  IdCard,
+  Hash, 
+} from "lucide-react";
 
 export default function CompanyProfile(){
     const [company, setCompany] = useState(null);
@@ -342,7 +368,7 @@ export default function CompanyProfile(){
 
           <div style={styles.card}>
             <h2 style={styles.cardTitle}>
-              <span>🏢</span>
+              <Building2 size={24}/>
               <span>Company Information</span>
             </h2>
 
@@ -410,19 +436,38 @@ export default function CompanyProfile(){
         <p style={styles.pageSubtitle}>Manage your company information and trust score</p>
 
         <div style={styles.card}>
-          <h2 style={styles.companyName}>🏢 {company.name}</h2>
+          <h2 style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                ...styles.companyName
+              }}><Building2 size={30}/> 
+            {company.name}
+          </h2>
           <p style={styles.description}>{company.description}</p>
           
           <div style={styles.statusRow}>
             <span style={styles.statusLabel}>Verification Status:</span>
-            <span
+            <span 
               style={
                 company.verified_status
-                  ? { ...styles.verifiedBadge, ...styles.verifiedYes }
-                  : { ...styles.verifiedBadge, ...styles.verifiedNo }
+                  ? {
+                      ...styles.verifiedBadge,
+                      ...styles.verifiedYes,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                    }
+                  : {
+                      ...styles.verifiedBadge,
+                      ...styles.verifiedNo,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                    }
               }
             >
-              {company.verified_status ? "✓ Verified" : "⏳ Pending Verification"}
+              {company.verified_status ? <><CheckCircle size={18}/>Verified</> : <><Hourglass size={18}/>Pending Verification</>}
             </span>
           </div>
 
@@ -444,7 +489,7 @@ export default function CompanyProfile(){
 
               <div style={styles.explainSection}>
                 <h3 style={styles.explainTitle}>
-                  <span>💡</span>
+                  <ShieldCheck size={22}/>
                   <span>Why this Trust Score?</span>
                 </h3>
 
@@ -466,7 +511,12 @@ export default function CompanyProfile(){
                         e.currentTarget.style.transform = "translateX(0)";
                       }}
                     >
-                      <span style={styles.signalIcon}>✓</span>
+                      <span style={{display: "flex",
+                                    alignItems: "center",
+                                    gap: "6px",
+                                    ...styles.signalIcon}}>
+                        <CheckCircle size={18}/>
+                      </span>
                       <span>{v}</span>
                     </li>
                   ))}

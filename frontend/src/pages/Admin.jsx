@@ -89,6 +89,28 @@
 
 import { useEffect, useState } from "react";
 import client from "../api/client";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  Package,
+  MapPin,
+  Clock,
+  ClipboardList,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Trash2,
+  Info,
+  Lightbulb,
+  ShieldCheck,
+  Calendar,
+  IndianRupee,
+  Globe,
+  Plane,
+  User,
+} from "lucide-react";
 
 export default function Admin() {
   const [data, setData] = useState([]);
@@ -415,7 +437,7 @@ export default function Admin() {
               e.currentTarget.style.color = "#334155";
             }}
           >
-            <span>📊</span>
+            <BarChart3 size={18} className="mr-2" />
             <span>Audit Logs</span>
           </a>
         </div>
@@ -439,7 +461,7 @@ export default function Admin() {
               {/* Company Header */}
               <div style={styles.companyHeader}>
                 <div style={styles.companyInfo}>
-                  <h3 style={styles.companyName}>🏢 {entry.company.name}</h3>
+                  <h3 style={styles.companyName}> <Building2 size={20}/> {entry.company.name}</h3>
                   <p style={styles.companyDescription}>{entry.company.description}</p>
                   <span
                     style={
@@ -447,8 +469,12 @@ export default function Admin() {
                         ? { ...styles.verifiedBadge, ...styles.verifiedYes }
                         : { ...styles.verifiedBadge, ...styles.verifiedNo }
                     }
-                  >
-                    {entry.company.verified_status ? "✓ Verified" : "⏳ Not Verified"}
+                  > 
+                    {entry.company.verified_status ? (
+                      <span><CheckCircle size={16}/> Verified</span>
+                    ) : (
+                      <span><Clock size={16}/> Pending</span>
+                    )}
                   </span>
                 </div>
 
@@ -465,7 +491,7 @@ export default function Admin() {
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   >
-                    <span>✓</span>
+                    <span><CheckCircle size={16}/></span>
                     <span>Verify Company</span>
                   </button>
                 )}
@@ -474,7 +500,7 @@ export default function Admin() {
               {/* Documents Section */}
               <div style={styles.section}>
                 <h4 style={styles.sectionTitle}>
-                  <span>📄</span>
+                  <FileText size={18}/>
                   <span>Documents</span>
                 </h4>
                 {entry.documents.length === 0 ? (
@@ -511,7 +537,7 @@ export default function Admin() {
                                 e.currentTarget.style.boxShadow = "none";
                               }}
                             >
-                              ✓ Approve
+                              <CheckCircle size={16}/> Approve
                             </button>
                           )}
                         </div>
@@ -524,7 +550,7 @@ export default function Admin() {
               {/* Packages Section */}
               <div style={{ ...styles.section, ...styles.sectionLast }}>
                 <h4 style={styles.sectionTitle}>
-                  <span>📦</span>
+                  <Package size={18}/>
                   <span>Pending Packages</span>
                 </h4>
                 {entry.pending_packages.length === 0 ? (
@@ -535,7 +561,7 @@ export default function Admin() {
                       <div key={pkg.id} style={styles.packageCard}>
                         <div style={styles.packageInfo}>
                           <div style={styles.packageDestination}>
-                            <span>📍</span>
+                            <MapPin size={18}/>
                             <span>{pkg.destination}</span>
                           </div>
                           <div style={styles.packagePrice}>₹{pkg.price}</div>
@@ -552,7 +578,7 @@ export default function Admin() {
                             e.currentTarget.style.boxShadow = "none";
                           }}
                         >
-                          ✓ Approve Package
+                          <CheckCircle size={16}/> Approve Package
                         </button>
                       </div>
                     ))}
