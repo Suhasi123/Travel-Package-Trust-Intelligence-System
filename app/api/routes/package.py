@@ -13,6 +13,8 @@ from app.db.database import SessionLocal
 from app.db.models.package import Package
 from app.schemas.package import PackageCreate
 from app.db.models.trust_score import TrustScore
+from app.db.models.review import Review
+from app.db.models.booking import Booking
 from app.schemas.package import PackageWithTrust
 from app.core.deps import get_current_user
 
@@ -208,3 +210,74 @@ def delete_package(
     db.commit()
 
     return {"message": "Package deleted successfully"}
+
+@router.get("/detail/{package_id}")
+def get_package_detail(
+    package_id: int,
+    db: Session = Depends(get_db)
+):
+
+    # Fetch package
+    pkg = db.query(Package).filter(
+        Package.id == package_id,
+        Package.is_active == True
+    ).first()
+
+    if not pkg:
+        raise HTTPException(status_code=404, detail="Package not found")
+
+    # Fetch company
+    company = db.query(Company).filter(
+        Company.id == pkg.company_id
+    ).first()
+
+    # Trust score
+    trust = db.query(TrustScore.score).filter(
+        TrustScore.company_id == pkg.company_id
+    ).scalar()
+
+    # Reviews
+    reviews = (
+        db.query(
+            Review.id,
+            Review.rating,
+            Review.comment,
+        )
+        .join(Booking, Booking.id == Review.booking_id)
+        .filter(Booking.package_id == package_id)
+        .all()
+    )
+
+    avg_rating = (
+        db.query(func.avg(Review.rating))
+        .join(Booking, Booking.id == Review.booking_id)
+        .filter(Booking.package_id == package_id)
+        .scalar()
+    )
+
+    # Response aggregation
+    return {
+        "package": {
+            "id": pkg.id,
+            "destination": pkg.destination,
+            "price": pkg.price,
+            "duration": pkg.duration,
+            "inclusions": pkg.inclusions,
+            "status": pkg.status
+        },
+        "company": {
+            "id": company.id,
+            "name": company.name,
+            "verified": company.verified_status
+        },
+        "trust_score": trust,
+        "avg_rating": avg_rating,
+        "reviews": [
+            {
+                "id": r.id,
+                "rating": r.rating,
+                "comment": r.comment,
+            }
+            for r in reviews
+        ]
+    }

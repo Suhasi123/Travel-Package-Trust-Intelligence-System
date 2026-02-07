@@ -548,15 +548,17 @@ export default function Packages() {
       transition: "all 0.3s",
     },
     bookBtn: {
-      width: "100%",
+      width: "90%",
       padding: "10px 16px",
       background: "linear-gradient(90deg, #4f46e5 0%, #3b82f6 100%)",
       color: "white",
+      textAlign: "center",
       border: "none",
       borderRadius: "12px",
       fontWeight: "500",
       cursor: "pointer",
       transition: "all 0.3s",
+      textDecoration: "none",
     },
     emptyState: {
       textAlign: "center",
@@ -818,15 +820,15 @@ export default function Packages() {
                     </div>
 
                     <div style={styles.actions}>
-                      <a
+                      {/* <a
                         href={`/companies/${p.company_id}`}
                         style={styles.companyLink}
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#e2e8f0")}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#f1f5f9")}
                       >
                         View Company Profile
-                      </a>
-                      <button
+                      </a> */}
+                      {/* <button
                         onClick={async () => {
                           await client.post("/bookings", { package_id: p.id });
                           alert("Booking created (pending)");
@@ -846,7 +848,21 @@ export default function Packages() {
                         }}
                       >
                         <CheckCircle size={18}/> Book Package
-                      </button>
+                      </button> */}
+                      <a
+                        href={`/packages/${p.id}`}
+                        style={styles.bookBtn}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.transform = "scale(1.05)";
+                          e.currentTarget.style.boxShadow = "0 8px 12px rgba(79, 70, 229, 0.3)";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.transform = "scale(1)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }}
+                      >
+                        Package Details
+                      </a>
                     </div>
                   </div>
                 </div>
