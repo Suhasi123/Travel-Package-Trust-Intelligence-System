@@ -537,7 +537,7 @@ export default function Packages() {
     },
     companyLink: {
       display: "block",
-      width: "100%",
+      width: "90%",
       padding: "10px 16px",
       textAlign: "center",
       backgroundColor: "#f1f5f9",
@@ -820,14 +820,14 @@ export default function Packages() {
                     </div>
 
                     <div style={styles.actions}>
-                      {/* <a
+                      <a
                         href={`/companies/${p.company_id}`}
                         style={styles.companyLink}
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#e2e8f0")}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#f1f5f9")}
                       >
                         View Company Profile
-                      </a> */}
+                      </a>
                       {/* <button
                         onClick={async () => {
                           await client.post("/bookings", { package_id: p.id });
